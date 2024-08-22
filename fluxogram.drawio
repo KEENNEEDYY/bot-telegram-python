@@ -1,0 +1,71 @@
+<mxfile host="65bd71144e">
+    <diagram id="0rwfnVgCU1Fc1IYMDqj6" name="Page-1">
+        <mxGraphModel dx="2316" dy="1544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#000000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="17" style="edgeStyle=none;html=1;" edge="1" parent="1" source="2" target="15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;" edge="1" parent="1" source="2" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;" edge="1" parent="1" source="2" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Bem vindo" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="110" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" style="edgeStyle=none;html=1;" edge="1" parent="1" source="3" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="group" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="140" y="40" width="120" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Cliente" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="6">
+                    <mxGeometry x="20" y="70" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Olá" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;" vertex="1" parent="6">
+                    <mxGeometry width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=none;html=1;" edge="1" parent="1" source="7" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Seja bem vindo ao atendimento Powerlink Company...&lt;br&gt;Informe o número refente a opção de atendimento desejado:&lt;br&gt;&lt;br&gt;1 - Contratar nossos serviços&lt;br&gt;2 - Suporte&lt;br&gt;3 - Realizar pagamento" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="285" y="290" width="350" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Encaminhar para link do whatsapp com mensagem de contratação" style="rounded=1;whiteSpace=wrap;html=1;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="890" y="-270" width="200" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" style="edgeStyle=none;html=1;" edge="1" parent="1" source="15" target="9">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="1" style="rhombus;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="690" y="-100" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" style="edgeStyle=none;html=1;" edge="1" parent="1" source="18" target="27">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="890" y="140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="2" style="rhombus;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="690" y="100" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="19" target="28">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="906" y="480" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="3" style="rhombus;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="1">
+                    <mxGeometry x="690" y="320" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Encaminhar para link do whatsapp com mensagem de suporte" style="rounded=1;whiteSpace=wrap;html=1;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="890" y="95" width="200" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="Solicitar informações para busca na API de pagamentos." style="rounded=1;whiteSpace=wrap;html=1;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="890" y="450" width="200" height="90" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
