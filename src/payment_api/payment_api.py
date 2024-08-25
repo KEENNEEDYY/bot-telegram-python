@@ -1,0 +1,94 @@
+import requests
+import os
+from urllib.parse import quote
+
+# Variáveis de ambiente
+api_token = os.getenv('AUTH_PAYMENT_HTTP_TOKEN')
+api_base_url = os.getenv('AUTH_PAYMENT_BASE_URL')
+
+def get_client_id_by_cpf(client_cpf):
+    """
+    Obtém o ID do cliente a partir do CPF.
+
+    Args:
+        client_cpf (str): CPF do cliente.
+
+    Returns:
+        int: ID do cliente, se encontrado; caso contrário, None.
+    """
+    # Codifica o CPF para a URL
+    encoded_cpf = quote(client_cpf)
+    api_url = f'{api_base_url}/customers/?cpf_cnpj={encoded_cpf}'
+    headers = {
+        'Authorization': f'ApiKey {api_token}',
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.get(api_url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        if data['meta']['total_count'] == 1:
+            return data['objects'][0]['id']
+        else:
+            print("Cliente não encontrado ou múltiplos clientes com o mesmo CPF.")
+    else:
+        print(f"Erro ao buscar o ID do cliente: {response.status_code} - {response.text}")
+    return None
+
+def get_subscription_id_by_client_id(client_id):
+    """
+    Obtém o ID da assinatura a partir do ID do cliente.
+
+    Args:
+        client_id (int): ID do cliente.
+
+    Returns:
+        int: ID da assinatura, se encontrado; caso contrário, None.
+    """
+    api_url = f'{api_base_url}/subscriptions'
+    headers = {
+        'Authorization': f'ApiKey {api_token}',
+        'Content-Type': 'application/json'
+    }
+    params = {'customer': client_id}
+
+    response = requests.get(api_url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        if data['meta']['total_count'] == 1:
+            return data['objects'][0]['id']
+        else:
+            print("Assinatura não encontrada ou múltiplas assinaturas encontradas.")
+    else:
+        print(f"Erro ao buscar a assinatura: {response.status_code} - {response.text}")
+    return None
+
+def get_invoice_url_by_subscription_id(subscription_id):
+    """
+    Obtém o URL do boleto a partir do ID da assinatura.
+
+    Args:
+        subscription_id (int): ID da assinatura.
+
+    Returns:
+        str: URL do boleto, se encontrado; caso contrário, None.
+    """
+    api_url = f'{api_base_url}/subscriptions/{subscription_id}/invoices'
+    headers = {
+        'Authorization': f'ApiKey {api_token}',
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.get(api_url, headers=headers)
+    
+    if response.status_code == 200:
+        data = response.json()
+        if data['meta']['total_count'] == 1:
+            return data['objects'][0]['payment_url']
+        else:
+            print("Boleto não encontrado ou múltiplos boletos encontrados.")
+    else:
+        print(f"Erro ao buscar o boleto: {response.status_code} - {response.text}")
+    return None
