@@ -36,6 +36,46 @@ def get_client_id_by_cpf(client_cpf):
         print(f"Erro ao buscar o ID do cliente: {response.status_code} - {response.text}")
     return None
 
+def get_active_subscription_id_by_client_id(client_id):
+    """
+    Obtém o ID da assinatura ativa a partir do ID do cliente.
+
+    Args:
+        client_id (int): ID do cliente.
+
+    Returns:
+        int: ID da assinatura ativa, se encontrado; caso contrário, None.
+    """
+    api_url = f'{api_base_url}/subscriptions'
+    headers = {
+        'Authorization': f'ApiKey {api_token}',
+        'Content-Type': 'application/json'
+    }
+    params = {'customer': client_id}
+    print(client_id)
+
+    response = requests.get(api_url, headers=headers, params=params)
+    print(response)
+
+    if response.status_code == 200:
+        data = response.json()
+        active_subscriptions = [
+            sub['id'] for sub in data['objects'] if sub['status'] == 'active'
+        ]
+        if len(active_subscriptions) == 1:
+            return active_subscriptions[0]
+        elif len(active_subscriptions) > 1:
+            print("Múltiplas assinaturas ativas encontradas.")
+            # Retorna o primeiro, lista, ou lida de outra forma
+            # Clientes podem ter mais um assinatura 
+            return active_subscriptions[0]
+        else:
+            print("Nenhuma assinatura ativa encontrada.")
+    else:
+        print(f"Erro ao buscar a assinatura: {response.status_code} - {response.text}")
+    return None
+
+
 def get_subscription_id_by_client_id(client_id):
     """
     Obtém o ID da assinatura a partir do ID do cliente.
@@ -52,8 +92,10 @@ def get_subscription_id_by_client_id(client_id):
         'Content-Type': 'application/json'
     }
     params = {'customer': client_id}
+    print(client_id)
 
     response = requests.get(api_url, headers=headers, params=params)
+    print(response)
 
     if response.status_code == 200:
         data = response.json()
@@ -92,3 +134,39 @@ def get_invoice_url_by_subscription_id(subscription_id):
     else:
         print(f"Erro ao buscar o boleto: {response.status_code} - {response.text}")
     return None
+
+
+def get_invoice_urls_by_subscription_id(subscription_id):
+    print('DEBUG ----- get_invoice_urls_by_subscription_id')
+    """
+    Obtém os URLs dos boletos pendentes a partir do ID da assinatura.
+
+    Args:
+        subscription_id (int): ID da assinatura.
+
+    Returns:
+        list: Lista com os URLs dos boletos pendentes; caso contrário, lista vazia.
+    """
+    api_url = f'{api_base_url}/subscriptions/{subscription_id}/invoices'
+    headers = {
+        'Authorization': f'ApiKey {api_token}',
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.get(api_url, headers=headers)
+    
+    if response.status_code == 200:
+        data = response.json()
+        pending_urls = [
+            invoice['payment_url'] 
+            for invoice in data['objects'] 
+            if invoice['status'] == 'pending'
+        ]
+        if pending_urls:
+            print('DEBUG ----- get_invoice_urls_by_subscription_id IF PENDINGS_URL')
+            return pending_urls
+        else:
+            print("Nenhum boleto pendente encontrado.")
+    else:
+        print(f"Erro ao buscar os boletos: {response.status_code} - {response.text}")
+    return []

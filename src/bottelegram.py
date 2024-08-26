@@ -1,7 +1,7 @@
 import os
 import telebot
 import re
-from payment_api.payment_api import get_client_id_by_cpf, get_subscription_id_by_client_id, get_invoice_url_by_subscription_id
+from payment_api.payment_api import get_invoice_urls_by_subscription_id,get_client_id_by_cpf, get_subscription_id_by_client_id, get_active_subscription_id_by_client_id, get_invoice_url_by_subscription_id
 
 # Configurações do bot
 api_token = os.getenv('AUTH_TELEGRAM_HTTP_TOKEN')
@@ -65,27 +65,28 @@ def opcao3(user_message):
 def validar_cpf(cpf):
     return bool(re.match(r'^\d{11}$', cpf))
 
-# Captura e valida o CPF do usuário
 @bot.message_handler(func=lambda message: user_state.get(message.chat.id) == 'aguardando_cpf_boleto')
 def captura_cpf(user_message):
     cpf = user_message.text
     chat_id = user_message.chat.id
     
     if validar_cpf(cpf):
-        bot.send_message(chat_id, f"CPF {cpf} recebido. Buscando seu boleto...")
-        
+        bot.send_message(chat_id, f"CPF {cpf} recebido. Buscando seus boletos...")
+
         # Obter ID do cliente
         client_id = get_client_id_by_cpf(format_cpf(cpf))
         if client_id:
             # Obter ID da assinatura
-            subscription_id = get_subscription_id_by_client_id(client_id)
+            subscription_id = get_active_subscription_id_by_client_id(client_id)
+            
             if subscription_id:
-                # Obter URL do boleto
-                boleto_url = get_invoice_url_by_subscription_id(subscription_id)
-                if boleto_url:
-                    bot.send_message(chat_id, f"Aqui está o seu boleto: {boleto_url}")
+                # Obter URLs dos boletos
+                boletos_urls = get_invoice_urls_by_subscription_id(subscription_id)
+                if boletos_urls:
+                    for url in boletos_urls:
+                        bot.send_message(chat_id, f"Aqui está um dos seus boletos pendentes: {url}")
                 else:
-                    bot.send_message(chat_id, "Desculpe, não consegui encontrar o boleto.")
+                    bot.send_message(chat_id, "Desculpe, não consegui encontrar boletos pendentes.")
             else:
                 bot.send_message(chat_id, "Desculpe, não consegui encontrar a assinatura.")
         else:
@@ -95,6 +96,7 @@ def captura_cpf(user_message):
         user_state.pop(chat_id)  
     else:
         bot.send_message(chat_id, "CPF inválido. Por favor, informe apenas os 11 dígitos numéricos.")
+
 
 # Resposta padrão para mensagens não correspondentes a nenhum comando específico
 @bot.message_handler(func=lambda message: True)
