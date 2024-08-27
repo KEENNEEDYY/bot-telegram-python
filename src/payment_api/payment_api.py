@@ -137,7 +137,6 @@ def get_invoice_url_by_subscription_id(subscription_id):
 
 
 def get_invoice_urls_by_subscription_id(subscription_id):
-    print('DEBUG ----- get_invoice_urls_by_subscription_id')
     """
     Obtém os URLs dos boletos pendentes a partir do ID da assinatura.
 
@@ -163,7 +162,6 @@ def get_invoice_urls_by_subscription_id(subscription_id):
             if invoice['status'] == 'pending'
         ]
         if pending_urls:
-            print('DEBUG ----- get_invoice_urls_by_subscription_id IF PENDINGS_URL')
             return pending_urls
         else:
             print("Nenhum boleto pendente encontrado.")
