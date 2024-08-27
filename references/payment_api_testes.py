@@ -96,7 +96,6 @@ def get_subscription_id_by_client_id(client_id):
     print(client_id)
 
     response = requests.get(api_url, headers=headers, params=params)
-    print(response)
 
     if response.status_code == 200:
         data = response.json()
@@ -170,7 +169,8 @@ def get_invoice_urls_by_subscription_id(subscription_id):
         print(f"Erro ao buscar os boletos: {response.status_code} - {response.text}")
     return []
 
-def return_expired_invoices():
+
+def filtrar_boletos_vencidos():
     """
     Obtém a lista de boletos pendentes 
 
@@ -208,3 +208,4 @@ def return_expired_invoices():
                 boletos_vencidos.append(boleto)
     
     return boletos_vencidos
+
