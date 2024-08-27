@@ -76,7 +76,6 @@ def get_active_subscription_id_by_client_id(client_id):
         print(f"Erro ao buscar a assinatura: {response.status_code} - {response.text}")
     return None
 
-
 def get_subscription_id_by_client_id(client_id):
     """
     Obtém o ID da assinatura a partir do ID do cliente.
@@ -135,7 +134,6 @@ def get_invoice_url_by_subscription_id(subscription_id):
         print(f"Erro ao buscar o boleto: {response.status_code} - {response.text}")
     return None
 
-
 def get_invoice_urls_by_subscription_id(subscription_id):
     """
     Obtém os URLs dos boletos pendentes a partir do ID da assinatura.
@@ -168,7 +166,6 @@ def get_invoice_urls_by_subscription_id(subscription_id):
     else:
         print(f"Erro ao buscar os boletos: {response.status_code} - {response.text}")
     return []
-
 
 def filtrar_boletos_vencidos():
     """
@@ -248,3 +245,31 @@ def return_subscriptions_from_expired_invoices():
     
     return boletos_vencidos
 
+def get_customer_details_by_customer_id(customer_id):
+    """
+    Obtém o dados do cliente a partir de seu Id.
+
+    Args:
+        customer_id (str): id do cliente.
+
+    Returns:
+        detalhes do client, se encontrado; caso contrário, None.
+    """
+    
+    api_url = f'{api_base_url}/customers/{customer_id}'
+    headers = {
+        'Authorization': f'ApiKey {api_token}',
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.get(api_url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        if data:
+            return data
+        else:
+            print("Erro ao encontrar o ciente")
+    else:
+        print(f"Erro {response.status_code} - {response.text}")
+    return None
