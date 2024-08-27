@@ -209,3 +209,42 @@ def filtrar_boletos_vencidos():
     
     return boletos_vencidos
 
+def return_subscriptions_from_expired_invoices():
+    """
+    Obtém a lista de boletos pendentes 
+
+    Returns:
+        list: Lista com os URLs dos boletos pendentes; caso contrário, lista vazia.
+    """
+    api_url = f'{api_base_url}/invoices'
+    headers = {
+        'Authorization': f'ApiKey {api_token}',
+        'Content-Type': 'application/json'
+    }
+
+    params = {'status': 'pending', 'limit': '100'}
+
+    response = requests.get(api_url, headers=headers, params=params)
+    # Verifica se a resposta foi bem-sucedida
+    if response.status_code != 200:
+        print(f"Erro na requisição: {response.status_code} - {response.text}")
+        return []
+    
+
+    try:
+        data = response.json()
+    except ValueError:
+        print("Erro ao converter a resposta para JSON")
+        return []
+
+    boletos_vencidos = []
+    hoje = datetime.now().date()
+
+    for boleto in data.get('objects', []):
+        if boleto.get('status') == 'pending':
+            due_date = datetime.strptime(boleto.get('due_date'), "%Y-%m-%d").date()
+            if due_date < hoje:
+                boletos_vencidos.append(boleto)
+    
+    return boletos_vencidos
+

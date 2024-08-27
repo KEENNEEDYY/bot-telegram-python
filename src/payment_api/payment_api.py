@@ -76,7 +76,6 @@ def get_active_subscription_id_by_client_id(client_id):
         print(f"Erro ao buscar a assinatura: {response.status_code} - {response.text}")
     return None
 
-
 def get_subscription_id_by_client_id(client_id):
     """
     Obtém o ID da assinatura a partir do ID do cliente.
@@ -135,7 +134,6 @@ def get_invoice_url_by_subscription_id(subscription_id):
     else:
         print(f"Erro ao buscar o boleto: {response.status_code} - {response.text}")
     return None
-
 
 def get_invoice_urls_by_subscription_id(subscription_id):
     """
