@@ -6,6 +6,9 @@ import os
 api_token = os.getenv('AUTH_PAYMENT_HTTP_TOKEN')
 api_base_url = os.getenv('AUTH_PAYMENT_BASE_URL')
 
+print("AUTH_PAYMENT_HTTP_TOKEN:", api_token)
+print("AUTH_PAYMENT_BASE_URL:", api_base_url)
+
 def get_client_id_by_cpf(client_cpf, api_url, api_token):
     """
     Faz uma requisição à API de pagamentos para obter o URL do boleto.

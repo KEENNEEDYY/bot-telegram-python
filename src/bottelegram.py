@@ -190,4 +190,5 @@ Redirecionamento para whatsapp:
 def answer(user_message):
     bot.reply_to(user_message, default_answer)
 
+
 bot.polling()

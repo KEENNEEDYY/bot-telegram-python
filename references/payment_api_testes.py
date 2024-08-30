@@ -245,7 +245,6 @@ def return_subscriptions_from_expired_invoices():
     
     return boletos_vencidos
 
-
 def get_customer_details_by_customer_id(customer_id):
     """
     Obtém o dados do cliente a partir de seu Id.
