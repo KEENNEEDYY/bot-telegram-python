@@ -1,7 +1,13 @@
 import os
 import telebot
 import re
-from payment_api.payment_api import return_expired_all_invoices_messages,return_expired_invoices_messages, get_invoice_urls_by_subscription_id,get_client_id_by_cpf, get_subscription_id_by_client_id, get_active_subscription_id_by_client_id, get_invoice_url_by_subscription_id
+from time import sleep
+from payment_api.payment_api import (
+    return_expired_all_invoices_messages,return_expired_invoices_messages, 
+    get_invoice_urls_by_subscription_id,get_client_id_by_cpf, 
+    get_subscription_id_by_client_id, get_active_subscription_id_by_client_id, 
+    get_invoice_url_by_subscription_id
+)
 
 # Configurações do bot
 api_token = os.getenv('AUTH_TELEGRAM_HTTP_TOKEN')
@@ -30,6 +36,9 @@ Clique no link a seguir para ter acesso ao universo de soluções que a Powerlin
 
 https://api.whatsapp.com/send?phone=5531989870427&text=Ol%C3%A1,%20vi%20seu%20an%C3%BAncio%20pelo%20site%20e%20gostaria%20de%20conhecer%20seus%20planos%20para%20rastreamento%20veicular.
 """
+
+# Funções do bot (opcao1, opcao2, opcao3, etc.) aqui
+# ...
 
 def format_cpf(cpf):
     """
@@ -191,4 +200,17 @@ def answer(user_message):
     bot.reply_to(user_message, default_answer)
 
 
-bot.polling()
+# Função de polling com reconexão automática
+def start_bot():
+    while True:
+        try:
+            print("Iniciando o bot...")
+            bot.polling(none_stop=True, interval=0, timeout=20)
+            sleep(15)  # Aguarda 15 segundos antes de tentar reconectar
+            print('Bot iniciado com sucesso!')
+        except Exception as e:
+            print(f"Erro na execução do bot: {e}")
+            print("Reiniciando o bot em 15 segundos...")
+
+if __name__ == "__main__":
+    start_bot()
